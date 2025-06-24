@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+:root {
+	font-family: "Geist Sans", sans-serif;
+
+	line-height: 1.5;
+	font-weight: 400;
+	border-color: #4b5563;
+
+	color: rgba(255, 255, 255, 0.87);
+	background-color: #09090b;
+
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+a {
+	font-weight: 500;
+
+	text-decoration: inherit;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+h1 {
+	font-size: 3.2em;
+	line-height: 1.1;
+}
+
+textarea {
+	background-color: #0f0f0f;
+	border: 1px solid #27272a;
+}
+
+button {
+	font-family: inherit;
+
+	cursor: pointer;
+}
+
+@media (prefers-color-scheme: light) {
+	:root {
+		color: #213547;
+		background-color: #ffffff;
+	}
+
+	button {
+		background-color: #f9f9f9;
+	}
+}
+
+/* Sleek scrollbar with hidden track */
+.textarea-scrollbar {
+	scrollbar-width: thin; /* Firefox */
+	scrollbar-color: #888 transparent; /* Thumb color, transparent track */
+}
+
+.textarea-scrollbar::-webkit-scrollbar {
+	width: 8px;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-track {
+	background: transparent; /* Hide scrollbar track */
+}
+
+.textarea-scrollbar::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 10px;
+}
+
+.textarea-scrollbar::-webkit-scrollbar-thumb:hover {
+	background-color: #555;
+}
