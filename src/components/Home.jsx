@@ -59,7 +59,7 @@ const Home = () => {
   return (
     <div
       ref={containerRef}
-      className="mt-3 flex flex-col justify-center items-center min-h-fit p-3"
+      className="mt-3 flex flex-col justify-center items-center min-h-fit bg-[#09090b]  p-3"
     >
       <div className="w-full max-w-4xl flex flex-col sm:flex-row sm:items-center sm:justify-between px-3 gap-3">
         <input
@@ -71,6 +71,7 @@ const Home = () => {
             px-4 py-3
             rounded-lg
             border border-[#27272a]
+            text-white
             w-full
             sm:flex-1
             focus:outline-none focus:ring-2 
@@ -81,12 +82,11 @@ const Home = () => {
           className="
             px-4 py-3
             rounded-lg
-            
             sm:w-auto
             text-black
             bg-white
-            hover:bg-gray-200
-            transition-colors duration-300
+            hover:bg-[#1f1f1f] hover:scale-105 transition-all duration-200 ease-in-out 
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600
           "
         >
           {saveId ? "Update" : "Create"}
@@ -103,8 +103,8 @@ const Home = () => {
               rounded-lg
               text-white
               border border-[#27272a]
-              hover:bg-[#181a1b]
-              transition-colors duration-300
+              hover:bg-[#1f1f1f] hover:scale-105 transition-all duration-200 ease-in-out 
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600
             "
           >
             <svg
@@ -112,7 +112,7 @@ const Home = () => {
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
-              stroke="currentColor"
+              stroke="black"
               className="w-6 h-6"
             >
               <path

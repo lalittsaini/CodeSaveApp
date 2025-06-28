@@ -80,7 +80,7 @@ function handleCopy(content) {
   }
 
   return (
-    <div className="w-full overflow-x-hidden px-3">
+    <div className="w-full overflow-x-hidden bg-[#09090b] px-3 ">
       <div className="flex justify-center mt-4 mb-12 w-full">
         <div className="w-full max-w-4xl flex flex-col items-center p-2">
           <div className="flex items-center gap-2 border border-[#27272a] rounded-lg px-3 py-2 min- w-full focus-within:border-white ">
@@ -137,7 +137,7 @@ function handleCopy(content) {
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
-                          stroke="currentColor"
+                          stroke="white"
                           className="w-6 h-6 hover:stroke-[#57A0D5]"
                         >
                           <path
@@ -159,8 +159,8 @@ function handleCopy(content) {
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
+                          stroke="white"
+                          className="w-6 h-6 hover:stroke-[#5cb85c] bg-[#09090b]"
                         >
                           <path
                             strokeLinecap="round"
@@ -208,8 +208,8 @@ function handleCopy(content) {
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
+                          stroke="white"
+                          className="w-6 h-6 hover:stroke-red-500 bg-[#09090b]"
                         >
                           <path
                             strokeLinecap="round"
@@ -230,8 +230,8 @@ function handleCopy(content) {
                           fill="none"
                           viewBox="0 0 24 24"
                           strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6"
+                          stroke="white"
+                          className="w-6 h-6 hover:stroke-amber-500 bg-[#09090b]"
                         >
                           <path
                             strokeLinecap="round"
