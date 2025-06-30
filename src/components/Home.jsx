@@ -101,7 +101,7 @@ const Home = () => {
               flex items-center justify-center
               w-full sm:w-16 h-12
               rounded-lg
-              text-white
+              bg-white
               border border-[#27272a]
               hover:bg-[#1f1f1f] hover:scale-105 transition-all duration-200 ease-in-out 
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600
