@@ -49,7 +49,7 @@ const ViewSave = () => {
         <div className="flex justify-between items-center ml-3 w-full">
           <button
             onClick={() => navigate(-1)}
-            className="flex items-center justify-center w-16 h-12 ml-2 rounded-lg text-white border border-[#27272a] 
+            className="flex items-center justify-center w-16 h-12 ml-2 rounded-lg text-white bg-white border border-[#27272a] 
               hover:bg-[#1f1f1f] hover:scale-105 transition-all duration-200 ease-in-out 
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 cursor-pointer"
             aria-label="Go back"
@@ -92,7 +92,7 @@ const ViewSave = () => {
 
           <button
             onClick={handleCopy}
-            className="absolute top-4 right-1 text-white px-1 py-1 rounded-md 
+            className="absolute top-4 right-1 text-white bg-white px-1 py-1 rounded-md 
               hover:bg-[#1f1f1f] hover:scale-105 transition-all duration-200 ease-in-out 
               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600 cursor-pointer"
             aria-label="Copy note content"
