@@ -116,7 +116,7 @@ const Save = () => {
                 <div
                   key={save._id}
                   className="m-5 border border-[#4b5563] rounded-lg p-5 text-pretty flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 cursor-pointer hover:bg-[#121212] transition"
-                  onClick={() => navigate(`/save/${save._id}`)} // <- card click
+                  onClick={() => navigate(`/save/${save._id}`)}
                 >
                   <div className="flex-1 min-w-[250px] max-w-full truncate">
                     <h1 className="font-semibold truncate text-lg">
@@ -145,7 +145,7 @@ const Save = () => {
                           viewBox="0 0 24 24"
                           strokeWidth="1.5"
                           stroke="white"
-                          className="w-6 h-6 hover:stroke-[#57A0D5]"
+                          className="w-6 h-6 hover:stroke-[#57A0D5]  bg-[#09090b] " 
                         >
                           <path
                             strokeLinecap="round"
