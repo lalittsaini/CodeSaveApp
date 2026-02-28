@@ -35,6 +35,10 @@ const App = () => {
       </>
 
     },
+    {
+      path: "/share/:data",
+      element: <ViewSave />, // Handles shared notes
+    },
   ]);
   return (
     <div className=''>

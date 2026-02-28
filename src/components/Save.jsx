@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeFromSave } from "../redux/saveSlice";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Save = () => {
   const save = useSelector((state) => state.save.save);
   const [search, setSearch] = useState("");
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const filterData = save
     .filter((save) => save.title.toLowerCase().includes(search.toLowerCase()))
@@ -18,59 +19,53 @@ const Save = () => {
   function handleDelete(saveId) {
     dispatch(removeFromSave(saveId));
   }
-function handleCopy(content) {
-  if (navigator.clipboard && window.isSecureContext) {
- 
-    navigator.clipboard
-      .writeText(content)
-      .then(() => toast.success("Copied to Clipboard!"))
-      .catch(() => toast.error("Failed to Copy"));
-  } else {
-  
-    const textArea = document.createElement("textarea");
-    textArea.value = content;
-    textArea.style.position = "fixed"; 
-    textArea.style.opacity = "0";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
-      document.execCommand("copy");
-      toast.success("Copied to Clipboard!");
-    } catch (err) {
-      toast.error("Failed to Copy");
+
+  function handleCopy(content) {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard
+        .writeText(content)
+        .then(() => toast.success("Copied to Clipboard!"))
+        .catch(() => toast.error("Failed to Copy"));
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = content;
+      textArea.style.position = "fixed";
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand("copy");
+        toast.success("Copied to Clipboard!");
+      } catch {
+        toast.error("Failed to Copy");
+      }
+      document.body.removeChild(textArea);
     }
-    document.body.removeChild(textArea);
   }
-}
 
   function handleShare(saveId) {
-  const shareableLink = `${window.location.origin}/save/${saveId}`;
+    const note = save.find((item) => item._id === saveId);
+    if (!note) return toast.error("Note not found");
+    const jsonData = JSON.stringify(note);
+    const encoded = btoa(encodeURIComponent(jsonData));
+    const shareableLink = `${window.location.origin}/share/${encoded}`;
 
-  if (navigator.clipboard && window.isSecureContext) {
-
-    navigator.clipboard
-      .writeText(shareableLink)
-      .then(() => toast.success("Link copied to clipboard!"))
-      .catch(() => toast.error("Failed to copy link."));
-  } else {
-    
-    const textArea = document.createElement("textarea");
-    textArea.value = shareableLink;
-    textArea.style.position = "fixed"; 
-    textArea.style.opacity = "0";
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-    try {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard
+        .writeText(shareableLink)
+        .then(() => toast.success("Link copied to clipboard!"))
+        .catch(() => toast.error("Failed to copy link."));
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = shareableLink;
+      document.body.appendChild(textArea);
+      textArea.select();
       document.execCommand("copy");
+      document.body.removeChild(textArea);
       toast.success("Link copied to clipboard!");
-    } catch (err) {
-      toast.error("Failed to copy link.");
     }
-    document.body.removeChild(textArea);
   }
-}
 
   function truncateWords(text = "", limit = 10) {
     const words = text.trim().split(/\s+/);
@@ -83,7 +78,7 @@ function handleCopy(content) {
     <div className="w-full overflow-x-hidden bg-[#09090b] px-3 ">
       <div className="flex justify-center mt-4 mb-12 w-full">
         <div className="w-full max-w-4xl flex flex-col items-center p-2">
-          <div className="flex items-center gap-2 border border-[#27272a] rounded-lg px-3 py-2 min- w-full focus-within:border-white ">
+          <div className="flex items-center gap-2 border border-[#27272a] rounded-lg px-3 py-2 min-w-full focus-within:border-white ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 20 20"
@@ -113,7 +108,8 @@ function handleCopy(content) {
               filterData.map((save) => (
                 <div
                   key={save._id}
-                  className="m-5 border border-[#4b5563] rounded-lg p-5 text-pretty flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4"
+                  className="m-5 border border-[#4b5563] rounded-lg p-5 text-pretty flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 cursor-pointer hover:bg-[#121212] transition"
+                  onClick={() => navigate(`/save/${save._id}`)} // <- card click
                 >
                   <div className="flex-1 min-w-[250px] max-w-full truncate">
                     <h1 className="font-semibold truncate text-lg">
@@ -126,9 +122,13 @@ function handleCopy(content) {
 
                   <div className="flex-1 min-w-[250px] max-w-full flex flex-col items-start sm:items-end gap-3">
                     <div className="w-full flex flex-wrap justify-start sm:justify-end gap-3">
-                      <Link
-                        className=" hover:text-[#57A0D5]"
-                        to={`/?saveid=${save?._id}`}
+                      {/* Edit button */}
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate(`/?saveid=${save._id}`);
+                        }}
+                        className="hover:text-[#57A0D5]"
                         aria-label="Edit note"
                         title="Edit note"
                       >
@@ -146,10 +146,14 @@ function handleCopy(content) {
                             d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125"
                           />
                         </svg>
-                      </Link>
+                      </button>
 
+                      {/* Copy button */}
                       <button
-                        onClick={() => handleCopy(save?.content)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCopy(save?.content);
+                        }}
                         aria-label="Copy content"
                         title="Copy content"
                         className="hover:text-[#5cb85c] hover:stroke-[#5cb85c]"
@@ -170,36 +174,13 @@ function handleCopy(content) {
                         </svg>
                       </button>
 
-                      <Link
-                        className="underline text-white hover:text-[#3F51B5]"
-                        to={`/save/${save?._id}`}
-                        aria-label="View note"
-                        title="View note"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          strokeWidth={1.5}
-                          stroke="currentColor"
-                          className="w-6 h-6 hover:stroke-[#3F51B5]"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                          />
-                        </svg>
-                      </Link>
-
+                      {/* Delete button */}
                       <button
                         className="hover:text-red-500 hover:stroke-red-500"
-                        onClick={() => handleDelete(save?._id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDelete(save?._id);
+                        }}
                         aria-label="Delete note"
                         title="Delete note"
                       >
@@ -219,9 +200,13 @@ function handleCopy(content) {
                         </svg>
                       </button>
 
+                      {/* Share button */}
                       <button
                         className="hover:text-amber-500 hover:stroke-amber-500"
-                        onClick={() => handleShare(save?._id)}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleShare(save?._id);
+                        }}
                         aria-label="Share note"
                         title="Share note"
                       >
