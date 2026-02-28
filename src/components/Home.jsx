@@ -101,41 +101,34 @@ const Home = () => {
 
         {saveId && (
           <button
-  onClick={() => setSearchParams({})}
-  aria-label="Reset"
-  title="Reset"
-  className="
-    flex items-center justify-center
-    w-full sm:w-16 h-12
-    rounded-lg
-
-    bg-white text-[#213547] border border-[#4b5563]           /* Light mode */
-    dark:bg-[#09090b] dark:text-[rgba(255,255,255,0.87)] dark:border-[#27272a] /* Dark mode */
-
-    hover:bg-[#1f1f1f] dark:hover:bg-[#1f1f1f]
-    hover:scale-105
-    transition-all duration-200 ease-in-out
-
-    focus-visible:outline-none
-    focus-visible:ring-2
-    focus-visible:ring-gray-600
-  "
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    fill="none"
-    viewBox="0 0 24 24"
-    strokeWidth={1.5}
-    stroke="currentColor"
-    className="w-6 h-6"
-  >
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-    />
-  </svg>
-</button>
+            onClick={() => setSearchParams({})}
+            aria-label="Reset"
+            title="Reset"
+            className="
+              flex items-center justify-center
+              w-full sm:w-16 h-12
+              rounded-lg
+              text-white
+              border border-[#27272a]
+              hover:bg-[#1f1f1f] hover:scale-105 transition-all duration-200 ease-in-out 
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-600
+            "
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="black"
+              className="w-6 h-6"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+              />
+            </svg>
+          </button>
         )}
       </div>
 
