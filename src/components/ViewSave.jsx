@@ -2,6 +2,8 @@ import React from "react";
 import toast from "react-hot-toast";
 import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
+import LZString from "lz-string";
+
 
 const ViewSave = () => {
   const navigate = useNavigate();
@@ -11,15 +13,15 @@ const ViewSave = () => {
 
   let note = null;
 
-  if (data) {
-    try {
-      note = JSON.parse(decodeURIComponent(atob(data)));
-    } catch {
-      return <div className="p-4 text-red-500">Invalid shared note.</div>;
-    }
-  } else if (id) {
-    note = save.find((item) => item._id === id);
+ if (data) {
+  try {
+    note = JSON.parse(LZString.decompressFromEncodedURIComponent(data));
+  } catch {
+    return <div className="p-4 text-red-500">Invalid shared note.</div>;
   }
+} else if (id) {
+  note = save.find((item) => item._id === id);
+}
 
   if (!note) {
     return <div className="p-4 text-red-500">Note not found.</div>;

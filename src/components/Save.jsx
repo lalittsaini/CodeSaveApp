@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { removeFromSave } from "../redux/saveSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import LZString from "lz-string";
 
 const Save = () => {
   const save = useSelector((state) => state.save.save);
@@ -45,27 +46,33 @@ const Save = () => {
   }
 
   function handleShare(saveId) {
-    const note = save.find((item) => item._id === saveId);
-    if (!note) return toast.error("Note not found");
-    const jsonData = JSON.stringify(note);
-    const encoded = btoa(encodeURIComponent(jsonData));
-    const shareableLink = `${window.location.origin}/share/${encoded}`;
+  const note = save.find((item) => item._id === saveId);
 
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard
-        .writeText(shareableLink)
-        .then(() => toast.success("Link copied to clipboard!"))
-        .catch(() => toast.error("Failed to copy link."));
-    } else {
-      const textArea = document.createElement("textarea");
-      textArea.value = shareableLink;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand("copy");
-      document.body.removeChild(textArea);
-      toast.success("Link copied to clipboard!");
-    }
+  if (!note) {
+    toast.error("Note not found");
+    return;
   }
+
+  // Compress note data
+  const encoded = LZString.compressToEncodedURIComponent(JSON.stringify(note));
+
+  const shareableLink = `${window.location.origin}/share/${encoded}`;
+
+  if (navigator.clipboard && window.isSecureContext) {
+    navigator.clipboard
+      .writeText(shareableLink)
+      .then(() => toast.success("Link copied to clipboard!"))
+      .catch(() => toast.error("Failed to copy link."));
+  } else {
+    const textArea = document.createElement("textarea");
+    textArea.value = shareableLink;
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(textArea);
+    toast.success("Link copied to clipboard!");
+  }
+}
 
   function truncateWords(text = "", limit = 10) {
     const words = text.trim().split(/\s+/);
